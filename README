@@ -1,0 +1,1 @@
+-------------------------------------------Hadoop WordCount Sample-------------------------------------------by Hideya KatoSample for Hadoop MapReduce Practice.-- Hideya Kato 2011
