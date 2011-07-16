@@ -13,7 +13,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 	private static final IntWritable ONE = new IntWritable(1);
 	private Text word = new Text();
 	
-	private static final String PATTERN = "[a-zA-Z_0-9']+";
+	private static final String PATTERN = "[a-zA-Z_0-9\']+";
     private Pattern pattern = Pattern.compile(PATTERN);
     private Matcher matcher;
     
