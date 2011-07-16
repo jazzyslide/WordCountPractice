@@ -5,6 +5,8 @@
 	<artifactId>WordCountPractice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>WordCount Practice</name>
+	<description>WordCount Practice with Maven</description>
+	<inceptionYear>2011</inceptionYear>
 	<developers>
 		<developer>
 			<id>jazzyslide</id>
@@ -13,6 +15,9 @@
 			<url>http://twitter.com/jazzyslide</url>
 		</developer>
 	</developers>
+	<scm>
+		<connection>git@github.com:jazzyslide/WordCountPractice.git</connection>
+	</scm>
 
 	<dependencies>
 		<dependency>
