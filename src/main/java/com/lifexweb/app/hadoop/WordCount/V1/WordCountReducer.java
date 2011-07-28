@@ -1,4 +1,4 @@
-package com.lifexweb.app.hadoop;
+package com.lifexweb.app.hadoop.WordCount.V1;
 
 import java.io.IOException;
 
