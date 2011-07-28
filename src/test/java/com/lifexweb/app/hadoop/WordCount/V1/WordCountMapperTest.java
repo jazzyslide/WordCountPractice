@@ -1,4 +1,4 @@
-package com.lifexweb.app.hadoop;
+package com.lifexweb.app.hadoop.WordCount.V1;
 
 import junit.framework.TestCase;
 
@@ -8,6 +8,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.lifexweb.app.hadoop.WordCount.V1.WordCountMapper;
 
 public class WordCountMapperTest extends TestCase {
 

@@ -1,4 +1,4 @@
-package com.lifexweb.app.hadoop;
+package com.lifexweb.app.hadoop.WordCount.V1;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.lifexweb.app.hadoop.WordCount.V1.WordCountReducer;
 
 public class WordCountReducerTest extends TestCase {
 

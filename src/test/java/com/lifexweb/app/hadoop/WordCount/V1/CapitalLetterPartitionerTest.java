@@ -1,4 +1,4 @@
-package com.lifexweb.app.hadoop;
+package com.lifexweb.app.hadoop.WordCount.V1;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,8 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.lifexweb.app.hadoop.WordCount.V1.CapitalLetterPartitioner;
 
 public class CapitalLetterPartitionerTest {
 

@@ -1,4 +1,4 @@
-package com.lifexweb.app.hadoop;
+package com.lifexweb.app.hadoop.WordCount.V1;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -6,6 +6,9 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.lifexweb.app.hadoop.WordCount.V1.WordCountMapper;
+import com.lifexweb.app.hadoop.WordCount.V1.WordCountReducer;
 
 public class WordCountMainTest {
 
