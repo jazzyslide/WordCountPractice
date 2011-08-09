@@ -10,34 +10,28 @@ import org.apache.hadoop.io.WritableComparable;
 
 public class WordKeyWritable implements WritableComparable<WordKeyWritable> {
 
-	private IntWritable fileCode;
 	private Text capitLetter;
 	private Text word;
 	
 	public WordKeyWritable() {
-		set(new IntWritable(), new Text(), new Text());
+		set(new Text(), new Text());
 	}
 	
 	public WordKeyWritable(int fileCode, String capitLetter, String word) {
-		set(new IntWritable(fileCode), new Text(capitLetter), new Text(word));
+		set(new Text(capitLetter), new Text(word));
 	}
 	
-	public WordKeyWritable(IntWritable fileCode, Text capitLetter, Text word) {
-		set(fileCode, capitLetter, word);
+	public WordKeyWritable(Text capitLetter, Text word) {
+		set(capitLetter, word);
 	}
 
-	public void set(int fileCode, String capitLetter, String word) {
-		set(new IntWritable(fileCode), new Text(capitLetter), new Text(word));
+	public void set(String capitLetter, String word) {
+		set(new Text(capitLetter), new Text(word));
 	}
 	
-	public void set(IntWritable fileCode, Text capitLetter, Text word) {
-		this.fileCode = fileCode;
+	public void set(Text capitLetter, Text word) {
 		this.capitLetter = capitLetter;
 		this.word = word;
-	}
-	
-	public IntWritable getFileCode() {
-		return fileCode;
 	}
 	
 	public Text getCapitLetter() {
@@ -50,35 +44,28 @@ public class WordKeyWritable implements WritableComparable<WordKeyWritable> {
 
 	@Override
 	public String toString() {
-		return fileCode.toString() + "\t" + capitLetter.toString() + "\t" + word.toString();
+		return capitLetter.toString() + "\t" + word.toString();
 	}
 	
 	public void readFields(DataInput in) throws IOException {
-		fileCode.readFields(in);
 		capitLetter.readFields(in);
 		word.readFields(in);
 	}
 
 	public void write(DataOutput out) throws IOException {
-		fileCode.write(out);
 		capitLetter.write(out);
 		word.write(out);
 	}
 	
 	public int hashCode() {
-		return fileCode.hashCode() * 163 + capitLetter.hashCode() * 63 + word.hashCode();
+		return capitLetter.hashCode() * 163 + word.hashCode();
 	}
 
 	public int compareTo(WordKeyWritable cmpLine) {
-		int cmp = fileCode.compareTo(cmpLine.fileCode);
+		int cmp = capitLetter.compareTo(cmpLine.getCapitLetter());
 		if (cmp != 0) {
 			return cmp;
-		} else {
-			cmp = capitLetter.compareTo(cmpLine.getCapitLetter());
-			if (cmp != 0) {
-				return cmp;
-			}
-			return word.compareTo(cmpLine.getWord());
 		}
+		return word.compareTo(cmpLine.getWord());
 	}
 }

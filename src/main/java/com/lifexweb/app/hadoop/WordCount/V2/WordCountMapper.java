@@ -24,14 +24,13 @@ public class WordCountMapper extends Mapper<LongWritable, Text, WordKeyWritable,
 	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 		String line = value.toString();
 		line = line.toLowerCase();
-		int fileCode = context.getTaskAttemptID().getTaskID().getId();
 
 		//正規表現でワードを抜き出すかたちに
 		matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			for (String wordStr : matcher.group().split("\\s")){
 				//ファイル識別子　＋　単語の頭文字　＋　単語
-				wordKey.set(fileCode, wordStr.substring(0, 1), wordStr);
+				wordKey.set(wordStr.substring(0, 1), wordStr);
 				word.set(wordStr);
 				context.write(wordKey, ONE);
 			}

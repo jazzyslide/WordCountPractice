@@ -30,7 +30,7 @@ public class WordCountReducer extends Reducer<WordKeyWritable, IntWritable, Text
 				wordTotalCount = cnt.get();
 			} else if (!tmpCapitalLetter.equals(wordKey.getCapitLetter().toString())){
 				//前の単語と頭文字が違う場合
-				resultKey.set(wordKey.getFileCode().toString() + "\t" + tmpCapitalLetter);
+				resultKey.set(tmpCapitalLetter);
 				resultValue.set(wordKindCount + "\t" + wordTotalCount);
 				context.write(resultKey, resultValue);
 				
@@ -46,7 +46,7 @@ public class WordCountReducer extends Reducer<WordKeyWritable, IntWritable, Text
 			}
 		}
 		if (!tmpCapitalLetter.isEmpty() && !tmpWord.isEmpty()) {
-			resultKey.set(wordKey.getFileCode().toString() + "\t" + tmpCapitalLetter);
+			resultKey.set(tmpCapitalLetter);
 			resultValue.set(wordKindCount + "\t" + wordTotalCount);
 			context.write(resultKey, resultValue);
 		}

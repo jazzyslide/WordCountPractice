@@ -15,13 +15,9 @@ public class CapitalLetterComparator extends WritableComparator {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public int compare(WritableComparable wc1, WritableComparable wc2) {
-		//ファイルの識別子と単語の頭文字の組み合わせで比較
+		//単語の頭文字で比較
 		WordKeyWritable wkw1 = (WordKeyWritable)wc1;
 		WordKeyWritable wkw2 = (WordKeyWritable)wc2;
-		int cmp = wkw1.getFileCode().compareTo(wkw2.getFileCode());
-		if (cmp != 0) {
-			return cmp;
-		}
 		return getCapitalLetter(wkw1).compareTo(getCapitalLetter(wkw2));
 	}
 	

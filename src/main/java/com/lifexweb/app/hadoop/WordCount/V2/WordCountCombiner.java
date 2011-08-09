@@ -25,7 +25,7 @@ public class WordCountCombiner extends Reducer<WordKeyWritable, IntWritable, Wor
 				wordTotalCount = cnt.get();
 			} else if (!tmpWord.equals(wordKey.getWord().toString())){
 				//前の単語と違う場合
-				resultKey.set(wordKey.getFileCode().get(), wordKey.getCapitLetter().toString(), tmpWord);
+				resultKey.set(wordKey.getCapitLetter().toString(), tmpWord);
 				resultValue.set(wordTotalCount);
 				context.write(resultKey, resultValue);
 				
@@ -36,7 +36,7 @@ public class WordCountCombiner extends Reducer<WordKeyWritable, IntWritable, Wor
 			}
 		}
 		if (!tmpWord.isEmpty()) {
-			resultKey.set(wordKey.getFileCode().get(), wordKey.getCapitLetter().toString(), tmpWord);
+			resultKey.set(wordKey.getCapitLetter().toString(), tmpWord);
 			resultValue.set(wordTotalCount);
 			context.write(resultKey, resultValue);
 		}
