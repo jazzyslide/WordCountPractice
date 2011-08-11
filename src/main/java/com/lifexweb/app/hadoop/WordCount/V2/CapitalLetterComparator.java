@@ -1,10 +1,9 @@
 package com.lifexweb.app.hadoop.WordCount.V2;
 
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
-import com.lifexweb.app.hadoop.WordCount.V2.writable.WordKeyWritable;
+import com.lifexweb.app.hadoop.WordCount.V2.Writable.WordKeyWritable;
 
 public class CapitalLetterComparator extends WritableComparator {
 
@@ -18,11 +17,6 @@ public class CapitalLetterComparator extends WritableComparator {
 		//単語の頭文字で比較
 		WordKeyWritable wkw1 = (WordKeyWritable)wc1;
 		WordKeyWritable wkw2 = (WordKeyWritable)wc2;
-		return getCapitalLetter(wkw1).compareTo(getCapitalLetter(wkw2));
+		return wkw1.getCapitLetter().compareTo(wkw2.getCapitLetter());
 	}
-	
-	private Text getCapitalLetter(WordKeyWritable wordKey) {
-		return new Text(wordKey.getWord().toString().substring(0,1));
-	}
-
 }

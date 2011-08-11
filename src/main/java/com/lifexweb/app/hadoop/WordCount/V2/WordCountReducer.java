@@ -6,7 +6,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import com.lifexweb.app.hadoop.WordCount.V2.writable.WordKeyWritable;
+import com.lifexweb.app.hadoop.WordCount.V2.Writable.WordKeyWritable;
 
 public class WordCountReducer extends Reducer<WordKeyWritable, IntWritable, Text, Text> {
 

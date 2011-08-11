@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import com.lifexweb.app.hadoop.WordCount.V2.writable.WordKeyWritable;
+import com.lifexweb.app.hadoop.WordCount.V2.Writable.WordKeyWritable;
 
 public class WordCountCombiner extends Reducer<WordKeyWritable, IntWritable, WordKeyWritable, IntWritable> {
 
