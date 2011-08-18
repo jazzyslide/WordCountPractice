@@ -16,7 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-import com.lifexweb.app.hadoop.WordCount.V2.writable.WordKeyWritable;
+import com.lifexweb.app.hadoop.WordCount.V2.Writable.WordKeyWritable;
 
 /**
  * @author kato_hideya

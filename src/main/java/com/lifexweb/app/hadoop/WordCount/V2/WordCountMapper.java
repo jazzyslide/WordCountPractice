@@ -9,7 +9,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import com.lifexweb.app.hadoop.WordCount.V2.writable.WordKeyWritable;
+import com.lifexweb.app.hadoop.WordCount.V2.Writable.WordKeyWritable;
 
 public class WordCountMapper extends Mapper<LongWritable, Text, WordKeyWritable, IntWritable> {
 	private static final IntWritable ONE = new IntWritable(1);
@@ -29,7 +29,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, WordKeyWritable,
 		matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			for (String wordStr : matcher.group().split("\\s")){
-				//ファイル識別子　＋　単語の頭文字　＋　単語
+				//単語の頭文字　＋　単語
 				wordKey.set(wordStr.substring(0, 1), wordStr);
 				word.set(wordStr);
 				context.write(wordKey, ONE);
