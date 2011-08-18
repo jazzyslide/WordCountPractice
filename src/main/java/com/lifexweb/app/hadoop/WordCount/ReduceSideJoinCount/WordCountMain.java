@@ -18,7 +18,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 /**
  * @author kato_hideya
- * WordCountの実行用Mainクラス
+ * WordCount(ReduceSideJoin)の実行用Mainクラス
  */
 public class WordCountMain {
 

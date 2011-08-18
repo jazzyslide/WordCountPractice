@@ -22,11 +22,11 @@ public class WordCountReducer extends Reducer<Text, WordValueWritable, NullWrita
 	}
 	
 	@Override
-	protected void reduce(Text word, Iterable<WordValueWritable> values, Context context)
+	protected void reduce(Text word, Iterable<WordValueWritable> wordValues, Context context)
 			throws IOException, InterruptedException {
 		
 		int count = 0;
-		for (WordValueWritable value : values) {
+		for (WordValueWritable value : wordValues) {
 			count += value.getCount().get();
 			
 			if (!value.getUrl().toString().isEmpty()) {
