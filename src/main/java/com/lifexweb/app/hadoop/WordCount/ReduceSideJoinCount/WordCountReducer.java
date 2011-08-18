@@ -36,7 +36,8 @@ public class WordCountReducer extends Reducer<Text, WordValueWritable, NullWrita
 		result.setWord(word);
 		result.setCount(count);
 		
-		if (!result.getUrl().toString().isEmpty()) {
+		if (!result.getUrl().toString().isEmpty() &&
+				count > 0) {
 			context.write(NullWritable.get(), result);
 		}
 	}
