@@ -35,8 +35,10 @@ public class WordCountMain {
 		
 		job.setMapperClass(WordCountMapper.class);
 		job.setPartitionerClass(WordPartitioner.class);
-//		job.setCombinerClass(WordCountReducer.class);
-		job.setGroupingComparatorClass(WordComparator.class);
+		job.setCombinerClass(WordCountCombiner.class);
+		
+		//TODO 単一キーのためGroupingComparator必要ない、、、？
+//		job.setGroupingComparatorClass(WordComparator.class);
 		job.setReducerClass(WordCountReducer.class);
 		
 		job.setMapOutputKeyClass(Text.class);
