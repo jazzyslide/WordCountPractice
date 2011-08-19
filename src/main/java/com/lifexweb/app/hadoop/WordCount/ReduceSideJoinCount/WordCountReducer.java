@@ -26,20 +26,20 @@ public class WordCountReducer extends Reducer<Text, WordValueWritable, NullWrita
 			throws IOException, InterruptedException {
 		
 		int count = 0;
+		String tmpUrl = "";
 		for (WordValueWritable value : wordValues) {
 			count += value.getCount().get();
 			
 			if (!value.getUrl().toString().isEmpty()) {
-				result.setUrl(value.getUrl());
+				tmpUrl = value.getUrl().toString();
 			}
 		}
-		result.setWord(word);
-		result.setCount(count);
+		result.set(word.toString(), tmpUrl, count);
 		
-		if (!result.getUrl().toString().isEmpty() &&
-				count > 0) {
+		if (!result.getUrl().toString().isEmpty() && count > 0) {
 			context.write(NullWritable.get(), result);
 		}
+		result.set("", "", 0);
 	}
 	
 	@Override
