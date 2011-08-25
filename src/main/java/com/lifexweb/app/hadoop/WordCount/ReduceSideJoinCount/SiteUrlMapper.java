@@ -8,9 +8,11 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class SiteUrlMapper extends Mapper<LongWritable, Text, Text, WordValueWritable> {
-	private Text wordKey = new Text();
+public class SiteUrlMapper extends Mapper<LongWritable, Text, WordKeyWritable, WordValueWritable> {
+	private WordKeyWritable wordKey = new WordKeyWritable();
 	private WordValueWritable wordValue = new WordValueWritable();
+	//TODO 別クラス
+	private static final String URL_RECORD_FLAG_ON = "1";
 	
 	private static Log log = LogFactory.getLog(SiteUrlMapper.class);
 
@@ -32,7 +34,7 @@ public class SiteUrlMapper extends Mapper<LongWritable, Text, Text, WordValueWri
 			return;
 		}
 		wordValue.set(wordUrlPair[0], wordUrlPair[1], 0);
-		wordKey.set(wordUrlPair[0]);
+		wordKey.set(wordUrlPair[0], URL_RECORD_FLAG_ON);
 		context.write(wordKey, wordValue);
 	}
 	

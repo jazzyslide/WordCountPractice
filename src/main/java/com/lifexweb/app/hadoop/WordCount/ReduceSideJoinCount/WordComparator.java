@@ -1,21 +1,20 @@
 package com.lifexweb.app.hadoop.WordCount.ReduceSideJoinCount;
 
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
 public class WordComparator extends WritableComparator {
 
 	public WordComparator() {
-		super(Text.class, true);
+		super(WordKeyWritable.class, true);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public int compare(WritableComparable wc1, WritableComparable wc2) {
 		//keyとなっているwordで比較
-		Text text1 = (Text)wc1;
-		Text text2 = (Text)wc2;
-		return text1.compareTo(text2);
+		WordKeyWritable key1 = (WordKeyWritable)wc1;
+		WordKeyWritable key2 = (WordKeyWritable)wc2;
+		return key1.getWord().compareTo(key2.getWord());
 	}
 }

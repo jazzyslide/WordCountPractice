@@ -2,31 +2,23 @@ package com.lifexweb.app.hadoop.WordCount.ReduceSideJoinCount;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class WordCountCombiner extends Reducer<Text, WordValueWritable, Text, WordValueWritable> {
+public class WordCountCombiner extends Reducer<WordKeyWritable, WordValueWritable, WordKeyWritable, WordValueWritable> {
 
 	private WordValueWritable resultValue = new WordValueWritable();
 	
 	@Override
-	protected void reduce(Text text, Iterable<WordValueWritable> values, Context context)
+	protected void reduce(WordKeyWritable wordKey, Iterable<WordValueWritable> wordValues, Context context)
 			throws IOException, InterruptedException {
 		
 		int count = 0;
-		for (WordValueWritable value : values) {
-			
-			//URLの行の場合はそのまま出力
-			if (!value.getUrl().toString().isEmpty()) {
-				context.write(text, value);
-				return;
-			}
-			
+		for (WordValueWritable value : wordValues) {
 			if (value.getCount().get() != 0) {
 				count += value.getCount().get();
 			}
+			resultValue.set(value.getWord().toString(), value.getUrl().toString(), count);
 		}
-		resultValue.set(text.toString(), "", count);
-		context.write(text, resultValue);
+		context.write(wordKey, resultValue);
 	}	
 }

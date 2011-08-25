@@ -10,9 +10,11 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class WordCountMapper extends Mapper<LongWritable, Text, Text, WordValueWritable> {
-	private Text word = new Text();
+public class WordCountMapper extends Mapper<LongWritable, Text, WordKeyWritable, WordValueWritable> {
+	private WordKeyWritable wordKey = new WordKeyWritable();
 	private WordValueWritable wordValue = new WordValueWritable();
+	//TODO 別クラス
+	private static final String URL_RECORD_FLAG_OFF = "0";
 	
 	private static final String PATTERN = "[-a-zA-Z0-9]+";
     private Pattern pattern = Pattern.compile(PATTERN);
@@ -35,9 +37,9 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, WordValueW
 		matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			for (String wordStr : matcher.group().split("\\s")){
-				word.set(wordStr);
+				wordKey.set(wordStr, URL_RECORD_FLAG_OFF);
 				wordValue.set(wordStr, "", 1);
-				context.write(word, wordValue);
+				context.write(wordKey, wordValue);
 			}
 		}
 	}

@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
@@ -37,11 +36,10 @@ public class WordCountMain {
 		job.setPartitionerClass(WordPartitioner.class);
 		job.setCombinerClass(WordCountCombiner.class);
 		
-		//TODO 単一キーのためGroupingComparator必要ない、、、？
-//		job.setGroupingComparatorClass(WordComparator.class);
+		job.setGroupingComparatorClass(WordComparator.class);
 		job.setReducerClass(WordCountReducer.class);
 		
-		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputKeyClass(WordKeyWritable.class);
 		job.setMapOutputValueClass(WordValueWritable.class);
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(WordValueWritable.class);

@@ -5,12 +5,11 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class WordCountReducer extends Reducer<Text, WordValueWritable, NullWritable, WordValueWritable> {
+public class WordCountReducer extends Reducer<WordKeyWritable, WordValueWritable, NullWritable, WordValueWritable> {
 
-	private WordValueWritable result = new WordValueWritable();
+	private WordValueWritable resultValue = new WordValueWritable();
 	
 	private static Log log = LogFactory.getLog(WordCountReducer.class);
     
@@ -22,24 +21,19 @@ public class WordCountReducer extends Reducer<Text, WordValueWritable, NullWrita
 	}
 	
 	@Override
-	protected void reduce(Text word, Iterable<WordValueWritable> wordValues, Context context)
+	protected void reduce(WordKeyWritable wordKey, Iterable<WordValueWritable> wordValues, Context context)
 			throws IOException, InterruptedException {
 		
 		int count = 0;
-		String tmpUrl = "";
 		for (WordValueWritable value : wordValues) {
-			count += value.getCount().get();
-			
-			if (!value.getUrl().toString().isEmpty()) {
-				tmpUrl = value.getUrl().toString();
+			if (value.getCount().get() != 0) {
+				count += value.getCount().get();
 			}
+			resultValue.set(value.getWord().toString(), value.getUrl().toString(), count);
 		}
-		result.set(word.toString(), tmpUrl, count);
-		
-		if (!result.getUrl().toString().isEmpty() && count > 0) {
-			context.write(NullWritable.get(), result);
+		if (!resultValue.getUrl().toString().isEmpty()) {
+			context.write(NullWritable.get(), resultValue);
 		}
-		result.set("", "", 0);
 	}
 	
 	@Override
