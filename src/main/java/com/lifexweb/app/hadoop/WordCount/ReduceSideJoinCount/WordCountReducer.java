@@ -10,6 +10,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class WordCountReducer extends Reducer<WordKeyWritable, WordValueWritable, NullWritable, WordValueWritable> {
 
 	private WordValueWritable resultValue = new WordValueWritable();
+	private static final String URL_RECORD_FLAG_OFF = "0";
 	
 	private static Log log = LogFactory.getLog(WordCountReducer.class);
     
@@ -24,14 +25,21 @@ public class WordCountReducer extends Reducer<WordKeyWritable, WordValueWritable
 	protected void reduce(WordKeyWritable wordKey, Iterable<WordValueWritable> wordValues, Context context)
 			throws IOException, InterruptedException {
 		
+		//UrlRecordFlagが降順で来るのでURL行がなければそもそもカウントしない
+		if (URL_RECORD_FLAG_OFF.equals(wordKey.getUrlRecordFlag().toString())) return;
+		
 		int count = 0;
+		String url = "";
 		for (WordValueWritable value : wordValues) {
 			if (value.getCount().get() != 0) {
 				count += value.getCount().get();
 			}
-			resultValue.set(value.getWord().toString(), value.getUrl().toString(), count);
+			if (!value.getUrl().toString().isEmpty()) url = value.getUrl().toString();
 		}
-		if (!resultValue.getUrl().toString().isEmpty()) {
+		
+		//inner-join相当なのでwordが0回のものは出力しない
+		if (count != 0) {
+			resultValue.set(wordKey.getWord().toString(), url, count);
 			context.write(NullWritable.get(), resultValue);
 		}
 	}

@@ -35,7 +35,7 @@ public class WordCountMain {
 		job.setMapperClass(WordCountMapper.class);
 		job.setPartitionerClass(WordPartitioner.class);
 		job.setCombinerClass(WordCountCombiner.class);
-		
+		job.setSortComparatorClass(WordSortComparator.class);
 		job.setGroupingComparatorClass(WordComparator.class);
 		job.setReducerClass(WordCountReducer.class);
 		
