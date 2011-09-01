@@ -65,18 +65,19 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 
 	//DistributedCacheをパースしてHashMapに格納
 	private HashMap<String,String> parseCacheFile(Context context) throws IOException {
-		HashMap<String,String> retPair = new HashMap<String, String>();
-		URI[] cacheFilePaths = DistributedCache.getCacheFiles(context.getConfiguration());
 		
-		BufferedReader br = null;
-		try {
-			FileSystem fs = FileSystem.get(context.getConfiguration());
-			if (cacheFilePaths != null) {
-				for (URI uri : cacheFilePaths) {
-					log.info("[MAP:WordCountMapper]: cacheFile URI: " + uri.toString());
-					
-					br = new BufferedReader(new InputStreamReader(fs.open(new Path(uri))));
-					
+		FileSystem fs = FileSystem.get(context.getConfiguration());
+		URI[] cacheFilePaths = DistributedCache.getCacheFiles(context.getConfiguration());
+		HashMap<String,String> retPair = new HashMap<String, String>();
+		
+		if (cacheFilePaths != null) {
+			for (URI uri : cacheFilePaths) {
+				
+				log.info("[MAP:WordCountMapper]: cacheFile URI: " + uri.toString());
+				
+				BufferedReader br = null;
+				try {
+					br = new BufferedReader(new InputStreamReader(fs.open(new Path(uri))));			
 					String line = br.readLine();
 					while (line != null) {
 						String[] pair = line.split("\t");
@@ -85,14 +86,14 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 						}
 						line = br.readLine();
 					}
+				} finally {
+					if (br != null) {
+						br.close();	
+					}
 				}
-			}
-		} finally {
-			if (br != null) {
-				br.close();	
+				
 			}
 		}
 		return retPair;
 	}
-	
 }

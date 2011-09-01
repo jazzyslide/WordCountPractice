@@ -38,6 +38,7 @@ public class WordCountMain {
 		args = parser.getRemainingArgs();
 		
 		Job job = new Job(conf, "WordCount MapSideJoin Ver.");
+		
 		job.setJarByClass(WordCountMain.class);
 		
 		job.setMapperClass(WordCountMapper.class);
