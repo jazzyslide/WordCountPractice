@@ -21,12 +21,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	
 	private static final String PATTERN = "[-a-zA-Z0-9]+";
-    private Pattern pattern = Pattern.compile(PATTERN);
-    private Matcher matcher;
+    private static final Pattern pattern = Pattern.compile(PATTERN);
  
     private Text resultKey = new Text();
     private static final IntWritable ONE = new IntWritable(1);
-    private URI[] cacheFilePaths;
     private HashMap<String,String> wordUrlPair = new HashMap<String, String>();
     
 	private static Log log = LogFactory.getLog(WordCountMapper.class);
@@ -47,7 +45,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 		String line = value.toString();
 
 		//正規表現でワードを抜き出すかたちに
-		matcher = pattern.matcher(line);
+		Matcher matcher = pattern.matcher(line);
 		while (matcher.find()) {
 			for (String wordStr : matcher.group().split("\\s")){
 				if (wordUrlPair.get(wordStr) != null) {
@@ -65,11 +63,10 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 		super.cleanup(context);
 	}
 
-	
 	//DistributedCacheをパースしてHashMapに格納
 	private HashMap<String,String> parseCacheFile(Context context) throws IOException {
 		HashMap<String,String> retPair = new HashMap<String, String>();
-		cacheFilePaths = DistributedCache.getCacheFiles(context.getConfiguration());
+		URI[] cacheFilePaths = DistributedCache.getCacheFiles(context.getConfiguration());
 		
 		BufferedReader br = null;
 		try {
