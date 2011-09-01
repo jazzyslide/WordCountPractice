@@ -30,14 +30,15 @@ public class WordCountMain {
 		//設定情報の読み込み
 		Configuration conf = new Configuration();
 		
-		//DistributedCache
-		DistributedCache.addCacheFile(URI.create(args[2]), conf);
-		
 		//引数のパース
 		GenericOptionsParser parser = new GenericOptionsParser(conf, args);
 		args = parser.getRemainingArgs();
 		
 		Job job = new Job(conf, "WordCount MapSideJoin Ver.");
+		
+		//DistributedCache
+		DistributedCache.addCacheFile(URI.create(args[2]), job.getConfiguration());
+		DistributedCache.createSymlink(job.getConfiguration());
 		
 		job.setJarByClass(WordCountMain.class);
 		
